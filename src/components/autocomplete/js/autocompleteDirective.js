@@ -222,7 +222,8 @@ function MdAutocomplete () {
                   aria-autocomplete="list"\
                   aria-haspopup="true"\
                   aria-activedescendant=""\
-                  aria-expanded="{{!$mdAutocompleteCtrl.hidden}}"/>\
+                  aria-expanded="{{!$mdAutocompleteCtrl.hidden}}"\
+                  class="md-input"/>\
               <div md-autocomplete-parent-scope md-autocomplete-replace>' + leftover + '</div>\
             </md-input-container>';
         } else {
@@ -244,7 +245,8 @@ function MdAutocomplete () {
                 aria-autocomplete="list"\
                 aria-haspopup="true"\
                 aria-activedescendant=""\
-                aria-expanded="{{!$mdAutocompleteCtrl.hidden}}"/>\
+                aria-expanded="{{!$mdAutocompleteCtrl.hidden}}"\
+                class="md-input"/>\
             <button\
                 type="button"\
                 tabindex="-1"\
