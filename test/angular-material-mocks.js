@@ -33,6 +33,19 @@ angular.module('ngMaterial-mock', [
   ])
   .config(['$provide', function($provide) {
 
+    $provide.factory('$material', ['$animate', '$timeout', function($animate, $timeout) {
+      return {
+        flush: function() {
+          try { $animate.flush(); } catch(e) {}
+        },
+        flushAll: function() {
+          this.flush();
+          $timeout.flush();
+          this.flush();
+        }
+      };
+    }]);
+
     /**
       * Angular Material dynamically generates Style tags
       * based on themes and palletes; for each ng-app.
@@ -69,8 +82,8 @@ angular.module('ngMaterial-mock', [
 
       var ngFlush = $delegate.flush;
       $delegate.flush = function() {
-          try      { ngFlush();  }
-          catch(e) { ;           }
+        try      { ngFlush();  }
+        catch(e) { ;           }
       };
 
       return $delegate;
@@ -92,7 +105,7 @@ angular.module('ngMaterial-mock', [
       return $delegate;
     });
 
-  }]);
+  }])
 
   /**
    * Stylesheet Mocks used by `animateCss.spec.js`

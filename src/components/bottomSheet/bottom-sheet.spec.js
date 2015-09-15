@@ -2,16 +2,15 @@ describe('$mdBottomSheet service', function() {
   beforeEach(module('material.components.bottomSheet'));
 
   describe('#build()', function() {
-    it('should escapeToClose == true', inject(function($mdBottomSheet, $rootScope, $rootElement, $timeout, $animate, $mdConstant) {
+    it('should escapeToClose == true', inject(function($mdBottomSheet, $rootElement, $material, $mdConstant) {
       var parent = angular.element('<div>');
       $mdBottomSheet.show({
         template: '<md-bottom-sheet>',
         parent: parent,
         escapeToClose: true
       });
-      $rootScope.$apply();
 
-      $animate.triggerCallbacks();
+      $material.flush();
 
       expect(parent.find('md-bottom-sheet').length).toBe(1);
 
@@ -20,7 +19,7 @@ describe('$mdBottomSheet service', function() {
         keyCode: $mdConstant.KEY_CODE.ESCAPE
       });
 
-      $timeout.flush();
+      $material.flushAll();
       expect(parent.find('md-bottom-sheet').length).toBe(0);
     }));
 
@@ -32,8 +31,6 @@ describe('$mdBottomSheet service', function() {
         escapeToClose: false
       });
       $rootScope.$apply();
-
-      $animate.triggerCallbacks();
 
       expect(parent.find('md-bottom-sheet').length).toBe(1);
 
@@ -61,7 +58,6 @@ describe('$mdBottomSheet service', function() {
         escapeToClose: false
       });
       $rootScope.$apply();
-      $animate.triggerCallbacks();
 
       var sheet = parent.find('md-bottom-sheet');
       expect(sheet.length).toBe(1);

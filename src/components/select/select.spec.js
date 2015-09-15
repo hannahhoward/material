@@ -83,31 +83,16 @@ describe('<md-select>', function() {
 
   function waitForSelectOpen() {
     try {
-      inject(function($rootScope, $timeout, $$rAF) {
-          $rootScope.$digest();
-
-            $$rAF.flush();  // flush $animate.enter(backdrop)
-          $timeout.flush(); // flush response
-            $$rAF.flush();  // flush $animateCss
-          $timeout.flush(); // flush response
-
-          $rootScope.$digest();
+      inject(function($material) {
+        $material.flushAll();
       });
     } catch(e) { }
   }
 
   function waitForSelectClose() {
     try {
-      inject(function($rootScope, $timeout, $$rAF) {
-          $rootScope.$digest();
-
-          $$rAF.flush();    // flush $animate.leave(backdrop)
-          $timeout.flush(); // flush response
-
-          $rootScope.$digest();
-
-          $$rAF.flush();
-          $rootScope.$digest();
+      inject(function($material) {
+        $material.flushAll();
       });
     } catch(e) { }
   }
@@ -138,7 +123,7 @@ describe('<md-select>', function() {
     expect(container.classList.contains('test')).toBe(true);
   }));
 
-  it('closes the menu if the element is destroyed', inject(function($document, $rootScope) {
+  it('closes the menu if the element is destroyed', inject(function($document, $rootScope, $timeout, $animate) {
     var called = false;
     $rootScope.onClose = function() {
       called = true;
@@ -151,6 +136,7 @@ describe('<md-select>', function() {
       type: 'click',
       target: angular.element($document.find('md-option')[0])
     });
+
     waitForSelectClose();
 
     expect(called).toBe(true);
@@ -738,7 +724,7 @@ describe('<md-select>', function() {
       expect($log.warn).not.toHaveBeenCalled();
     }));
 
-    it('sets up the aria-expanded attribute', inject(function($document) {
+    it('sets up the aria-expanded attribute', inject(function($document, $timeout) {
       disableAnimations();
 
       expect(el.attr('aria-expanded')).toBe('false');
