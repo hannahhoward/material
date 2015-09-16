@@ -175,7 +175,10 @@ md-input-container {
   [ng-messages], [data-ng-messages], [x-ng-messages] {
     position: relative;
     order: 4;
-    min-height: $input-error-height;
+
+    &.ng-active {
+      min-height: $input-error-height;
+    }
   }
 
   ng-message, data-ng-message, x-ng-message,
